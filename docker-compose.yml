@@ -5,7 +5,9 @@ services:
     image: airndlab/hackathon-hacks-ai-2023-api-service:${API_SERVICE_TAG}
     environment:
       - RANKER_SERVICE_URL=http://ranker-service:80
+      - VANILLA_RANKER_SERVICE_URL=http://vanilla-ranker-service:80
       - SQUAD_SERVICE_URL=http://squad-service:80
+      - VANILLA_RANKER_DEFAULT=${VANILLA_RANKER_DEFAULT}
     ports:
       - ${API_SERVICE_PORT}:80
     networks:
@@ -22,6 +24,17 @@ services:
     volumes:
       - ${RANKER_SERVICE_DATASET_DIR}:/app/dataset
       - ${RANKER_SERVICE_MODEL_DIR}:/app/model
+
+  vanilla-ranker-service:
+    image: airndlab/hackathon-hacks-ai-2023-vanilla-ranker-service:${VANILLA_RANKER_SERVICE_TAG}
+    environment:
+      - EXCEL_DATA_PATH=/app/train_dataset.xlsx
+    volumes:
+      - ${VANILLA_RANKER_SERVICE_EXCEL_PATH}:/app/train_dataset.xlsx
+    ports:
+      - ${VANILLA_RANKER_SERVICE_PORT}:80
+    networks:
+      - service-net
 
   squad-service:
     image: airndlab/hackathon-hacks-ai-2023-squad-service:${SQUAD_SERVICE_TAG}
