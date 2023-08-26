@@ -1,0 +1,38 @@
+name: hacks-ai
+
+services:
+  api-service:
+    image: airndlab/hackathon-hacks-ai-2023-api-service:${API_SERVICE_TAG}
+    environment:
+      - RANKER_SERVICE_URL=http://ranker-service:80
+      - SQUAD_SERVICE_URL=http://squad-service:80
+    ports:
+      - ${API_SERVICE_PORT}:80
+    networks:
+      - service-net
+    depends_on:
+      - ranker-service
+
+  ranker-service:
+    image: airndlab/hackathon-hacks-ai-2023-ranker-service:${RANKER_SERVICE_TAG}
+    ports:
+      - ${RANKER_SERVICE_PORT}:80
+    networks:
+      - service-net
+    volumes:
+      - ${RANKER_SERVICE_DATASET_DIR}:/app/dataset
+      - ${RANKER_SERVICE_MODEL_DIR}:/app/model
+
+  squad-service:
+    image: airndlab/hackathon-hacks-ai-2023-squad-service:${SQUAD_SERVICE_TAG}
+    networks:
+      - service-net
+    volumes:
+      - ${SQUAD_SERVICE_CONFIG_DIR}:/app/config
+      - ${SQUAD_SERVICE_MODEL_DIR}:/app/model
+    ports:
+      - ${SQUAD_SERVICE_PORT}:80
+
+networks:
+  service-net:
+    driver: bridge
