@@ -1,0 +1,32 @@
+name: joomla
+
+services:
+  cms:
+    image: joomla:3
+    environment:
+      - JOOMLA_DB_HOST=db:3306
+      - JOOMLA_DB_PASSWORD=joomla_pass
+    ports:
+      - 80:80
+    networks:
+      - joomla-net
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=joomla_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - joomla-net
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  joomla-net:
+    driver: bridge
