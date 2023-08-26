@@ -12,3 +12,5 @@
 1. **Сервис обработки запросов от пользователей** [api-service](https://github.com/airndlab/hackathon-hacks-ai-2023-api-service)
 2. **Сервис ранжировщик** [ranker-service](https://github.com/airndlab/hackathon-hacks-ai-2023-ranker-service)
 3. **Сервис подготовки ответа с помощтю модели** [squad-service](https://github.com/airndlab/hackathon-hacks-ai-2023-squad-service)
+
+- **Плагин для CMS Joomla** [joomla-plugin](https://github.com/airndlab/hackathon-hacks-ai-2023-joomla-plugin)
